@@ -13,7 +13,7 @@ class SubjectTopics with ChangeNotifier{
   final String subId;
   final String title;
   final CourseType type;
-  bool isBookmark;
+  // bool isBookmark;
   
   //construct
   SubjectTopics({
@@ -21,12 +21,12 @@ class SubjectTopics with ChangeNotifier{
   @required this.subId,
   @required this.title,
   @required this.type,
-    this.isBookmark = false,
+    // this.isBookmark = false,
   });
 
-  void toggleBookmark() {
-    isBookmark = !isBookmark;
-    notifyListeners();
-  }
+  // void toggleBookmark() {
+  //   isBookmark = !isBookmark;
+  //   notifyListeners();
+  // }
   
 }

@@ -6,11 +6,47 @@ import '../widget/topic_widget.dart';
 import '../providers/subject_topics_provider.dart';
 
 
-class CourseTopicScreen extends StatelessWidget {
+class CourseTopicScreen extends StatefulWidget {
 
   static const routeName = '/course-topic';
 
    CourseTopicScreen({Key key}) : super(key: key);
+
+  @override
+  _CourseTopicScreenState createState() => _CourseTopicScreenState();
+}
+
+class _CourseTopicScreenState extends State<CourseTopicScreen> {
+
+  var _isInit = true;
+  var _isLoading = false;
+
+   Future<void> _fetchData(BuildContext context) async {
+     await Provider.of<SubjectTopicsProvider>(context, listen: false).fetchAndSetTopics();
+   }
+
+   @override
+   void didChangeDependencies() {
+
+     if (_isInit) {
+
+        setState(() {
+          _isLoading = true;
+        });
+        
+       _fetchData(context).then((_) {
+
+         setState(() {
+           _isLoading = false;
+         });
+
+       });
+
+     }
+     _isInit = false;
+     super.didChangeDependencies();
+
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +82,26 @@ class CourseTopicScreen extends StatelessWidget {
         ],
       ),
     
-      body: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemCount: topicData.length,
-          itemBuilder: (_,i) => TopicWidget(
-            id: topicData[i].id,
-            title: topicData[i].title,
-            courseTitle: courseTitle,
-            imageUrl: courseImageUrl,
-            type: topicData[i].type,
-          )
+      body: _isLoading ? 
+      
+      LinearProgressIndicator(
+        backgroundColor: Colors.purple,
+      )
+
+      : RefreshIndicator(
+        onRefresh: () => _fetchData(context),
+              child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: ListView.builder(
+            itemCount: topicData.length,
+            itemBuilder: (_,i) => TopicWidget(
+              id: topicData[i].id,
+              title: topicData[i].title,
+              courseTitle: courseTitle,
+              imageUrl: courseImageUrl,
+              type: topicData[i].type,
+            )
+          ),
         ),
       ),
     );

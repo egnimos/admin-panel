@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../widget/course_widget.dart';
 import './course_edit_screen.dart';
 import '../providers/subject_provider.dart';
-import '../models/subject_model.dart';
+// import '../models/subject_model.dart';
 // import '../providers/subject_provider.dart';
 
 
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
 
     final courseData = Provider.of<SubjectProvider>(context);
     //subject (Programming language)..
-    final programmingLanguage = courseData.halfList.where((type) => type.type == SubjectType.ProgrammingLanguage).toList();
+    //final programmingLanguage = courseData.halfList.where((type) => type.type == SubjectType.ProgrammingLanguage).toList();
 
     return Scaffold(
 

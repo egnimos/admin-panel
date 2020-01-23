@@ -6,17 +6,17 @@ import '../providers/subject_topics.dart';
 import '../providers/subject_topics_provider.dart';
 
 
-class TopicEditScreen extends StatefulWidget {
+class TopicEditScreenUpdatePost extends StatefulWidget {
 
-  static const routeName = '/topic-edit-screen';
+  static const routeName = '/topic-edit-screen_update_post';
 
-  const TopicEditScreen({Key key}) : super(key: key);
+  const TopicEditScreenUpdatePost({Key key}) : super(key: key);
 
   @override
-  _TopicEditScreenState createState() => _TopicEditScreenState();
+  _TopicEditScreenUpdatePostState createState() => _TopicEditScreenUpdatePostState();
 }
 
-class _TopicEditScreenState extends State<TopicEditScreen> {
+class _TopicEditScreenUpdatePostState extends State<TopicEditScreenUpdatePost> {
 
   final _form = GlobalKey<FormState>(); // to interact the value of the form we need the key
 
@@ -36,15 +36,14 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
 
   CourseType _selectTopicTypes = CourseType.Topics;
 
-  // var _isInit = true;
+  var _isInit = true;
   var _isLoading = false;
-  // String courseId;
 
-  // var _initValue = {
-  //   'subId': null,
-  //   'title': '',
-  //   'type' : CourseType.Topics,
-  // };
+  var _initValue = {
+    'subId': null,
+    'title': '',
+    'type' : CourseType.Topics,
+  };
 
 
   var _editedTopic = SubjectTopics(
@@ -55,38 +54,38 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
   );
 
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
 
-  //     final topicsId = ModalRoute.of(context).settings.arguments as String;
+      final topicsId = ModalRoute.of(context).settings.arguments as String;
 
-  //     if (topicsId != null) {
+      if (topicsId != null) {
 
-  //       _editedTopic = Provider.of<SubjectTopicsProvider>(context, listen: false).findById(topicsId);
+        _editedTopic = Provider.of<SubjectTopicsProvider>(context, listen: false).findById(topicsId);
 
-  //       _initValue = {
-  //         'subId': _editedTopic.subId,
-  //         'title': _editedTopic.title,
-  //         'type': _editedTopic.type,
-  //       };
-  //       _selectTopicTypes = _initValue['type'];
+        _initValue = {
+          'subId': _editedTopic.subId,
+          'title': _editedTopic.title,
+          'type': _editedTopic.type,
+        };
+        _selectTopicTypes = _initValue['type'];
         
-  //     }
-  //     else {
+      }
+      else {
 
-  //       print(topicsId);
+        print(topicsId);
 
-  //     }
+      }
       
-  //   }
-  //   _isInit = false;
+    }
+    _isInit = false;
 
-  //   // if (_editedTopic.id == null) {
-  //   //    courseId = ModalRoute.of(context).settings.arguments as String; 
-  //   // }
-  //   super.didChangeDependencies();
-  // }
+    // if (_editedTopic.id == null) {
+    //    courseId = ModalRoute.of(context).settings.arguments as String; 
+    // }
+    super.didChangeDependencies();
+  }
 
 
 
@@ -107,11 +106,11 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
 
     _form.currentState.save();
 
+    if (_editedTopic.id != null) {
+
     try {
 
-      
-
-      await Provider.of<SubjectTopicsProvider>(context, listen: false).addTopics(_editedTopic);
+      await Provider.of<SubjectTopicsProvider>(context, listen: false).updateTopics(_editedTopic.id, _editedTopic);
       
     } catch (error) {
 
@@ -130,6 +129,7 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
         ),
       );
     }
+  }
 
     setState(() {
       _isLoading = false;
@@ -149,7 +149,7 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
   Widget build(BuildContext context) {
 
 
-    final courseId = ModalRoute.of(context).settings.arguments as String;
+    // final courseId = ModalRoute.of(context).settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -204,7 +204,7 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
 
                           _editedTopic = SubjectTopics(
                                 id: _editedTopic.id,
-                                subId: courseId,
+                                subId: _editedTopic.subId,
                                 title: _editedTopic.title,
                                 type: newValue,
                            );
@@ -224,7 +224,7 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
                 width: double.infinity,
                 height: 100,
                 child: TextFormField(
-                  // initialValue: _initValue['title'],
+                  initialValue: _initValue['title'],
                   decoration: InputDecoration(
                     labelText: 'Topic Name',
                     helperText: 'Enter the topic name or quiz name (ex: Introduction to Java or Quiz time 1',
@@ -245,7 +245,7 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
                     onSaved: (value) {
                       _editedTopic = SubjectTopics(
                                 id: _editedTopic.id,
-                                subId: courseId,
+                                subId: _editedTopic.subId,
                                 title: value,
                                 type: _editedTopic.type,
                            );

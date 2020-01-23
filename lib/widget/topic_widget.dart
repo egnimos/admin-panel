@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tutlify_admin_panel/screen/topic_quiz_screen.dart';
 
+import '../screen/topic_edit_screen(update_post).dart';
 import '../providers/subject_topics.dart';
+import '../providers/subject_topics_provider.dart';
 
 
 class TopicWidget extends StatelessWidget {
@@ -21,50 +25,94 @@ class TopicWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: ListTile(
-        
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(imageUrl),
-        ),
 
-        title: Text(
-          title
-        ),
+    final scaffold = Scaffold.of(context);
 
-        subtitle: type == CourseType.Topics 
-        ? Text(
-          '$courseTitle and type is TOPIC',
-        ) 
-        : Text(
-         '$courseTitle and type is Quiz', 
-        ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(
+         TopicQuizScreen.routeName,
 
-        trailing: Container(
+         arguments: {
+           'id': id,
+           'type': type,
+           'title': title,
+         } 
+        );
 
-          width: 100,
+        print(id);
+      },
+          child: Card(
+        elevation: 5,
+        child: ListTile(
+          
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(imageUrl),
+          ),
 
-          child: FittedBox(
-            child: Row(
-                children: <Widget>[
+          title: Text(
+            title
+          ),
 
-                IconButton(
-                  color: Colors.black,
-                  icon: Icon(Icons.edit),
-                  onPressed: () {},
-                ),
+          subtitle: type == CourseType.Topics 
+          ? Text(
+            '$courseTitle and type is TOPIC',
+          ) 
+          : Text(
+           '$courseTitle and type is Quiz', 
+          ),
 
-                IconButton(
-                  color: Colors.black,
-                  icon: Icon(Icons.delete),
-                  onPressed: () {},
-                )
+          trailing: Container(
 
-              ],
+            width: 100,
+
+            // child: FittedBox(
+              child: Row(
+                  children: <Widget>[
+
+                  IconButton(
+                    color: Colors.black,
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        TopicEditScreenUpdatePost.routeName,
+                        arguments: id,
+                      );
+                    },
+                  ),
+
+                  IconButton(
+                    color: Colors.black,
+                    icon: Icon(Icons.delete),
+                    onPressed: () async {
+
+                      try {
+
+                        await Provider.of<SubjectTopicsProvider>(context).deleteTopics(id);
+                        
+                      } catch (error) {
+
+                        scaffold.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Delete Failed!! check your internet connection',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        );
+                      }
+                    },
+                  )
+
+                ],
+              ),
             ),
           ),
-        ),
+        // ),
       ),
     );
   }

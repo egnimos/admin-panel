@@ -12,9 +12,9 @@ class SubjectProvider with ChangeNotifier {
 
   // final String type;
 
-  List<SubjectModel> _subjects = [];
-  List<SubjectModel> _frameworks = [];
-  List<SubjectModel> _coreConcepts = [];
+  // List<SubjectModel> _subjects = [];
+  // List<SubjectModel> _frameworks = [];
+  // List<SubjectModel> _coreConcepts = [];
 
   List<SubjectModel> _halfList = [];
 
@@ -24,17 +24,17 @@ class SubjectProvider with ChangeNotifier {
 
   // SubjectProvider();
 
-  List<SubjectModel> get subjects {
-    return [..._subjects];
-  }
+  // List<SubjectModel> get subjects {
+  //   return [..._subjects];
+  // }
 
-  List<SubjectModel> get frameworks {
-    return [..._frameworks];
-  }
+  // List<SubjectModel> get frameworks {
+  //   return [..._frameworks];
+  // }
 
-  List<SubjectModel> get coreConcepts {
-    return [..._coreConcepts];
-  }
+  // List<SubjectModel> get coreConcepts {
+  //   return [..._coreConcepts];
+  // }
 
   List<SubjectModel> get halfList {
     return [..._halfList];
@@ -53,7 +53,9 @@ class SubjectProvider with ChangeNotifier {
 
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      
       final List<SubjectModel> loadedData = [];
+
       SubjectType type;
 
       extractedData.forEach((courseId, courseData) {
@@ -212,6 +214,7 @@ class SubjectProvider with ChangeNotifier {
         }));
 
         _halfList[courseIndex] = subject;
+        notifyListeners();
         
       } catch (error) {
 
@@ -225,7 +228,7 @@ class SubjectProvider with ChangeNotifier {
       print('...');
     }
 
-    notifyListeners();
+    // notifyListeners();
 
   }
 

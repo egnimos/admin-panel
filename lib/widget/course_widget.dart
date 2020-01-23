@@ -46,7 +46,7 @@ class CourseWidget extends StatelessWidget {
         color: Color(color),
             child: ListTile(
 
-          title: Text(title),
+          title: Text(title, style: TextStyle(color: Colors.white),),
 
           leading: FittedBox(
 
@@ -71,7 +71,7 @@ class CourseWidget extends StatelessWidget {
                       arguments: id,
                     );
                   },
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
 
                 IconButton(
@@ -97,7 +97,7 @@ class CourseWidget extends StatelessWidget {
 
                     }
                   },
-                  color: Colors.red,
+                  color: Colors.white,
                 )
               ],
             ),
