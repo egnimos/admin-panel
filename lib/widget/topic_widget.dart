@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tutlify_admin_panel/screen/topic_quiz_screen.dart';
 
-import '../screen/topic_edit_screen(update_post).dart';
-import '../providers/subject_topics.dart';
+//providers Files
 import '../providers/subject_topics_provider.dart';
+import '../providers/subject_topics.dart';
+//edit Screens Files
+import '../edit_Screens/topic_edit_screen(update_post).dart';
 
 
 class TopicWidget extends StatelessWidget {

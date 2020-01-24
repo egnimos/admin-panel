@@ -24,9 +24,4 @@ class SubjectTopics with ChangeNotifier{
     // this.isBookmark = false,
   });
 
-  // void toggleBookmark() {
-  //   isBookmark = !isBookmark;
-  //   notifyListeners();
-  // }
-  
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './topic_edit_screen.dart';
-import '../widget/topic_widget.dart';
+//edit Screens Files
+import '../edit_Screens/topic_edit_screen.dart';
+//providers Files
 import '../providers/subject_topics_provider.dart';
+//widget Files
+import '../widget/topic_widget.dart';
 
 
 class CourseTopicScreen extends StatefulWidget {

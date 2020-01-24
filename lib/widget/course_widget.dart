@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//models Files
 import '../models/subject_model.dart';
-import '../screen/course_topic_screen.dart';
-import '../screen/course_edit_screen.dart';
+//providers Files
 import '../providers/subject_provider.dart';
+//edit Screens Files
+import '../edit_Screens/course_edit_screen.dart';
+//screens Files
+import '../screen/course_topic_screen.dart';
 
 
 class CourseWidget extends StatelessWidget {

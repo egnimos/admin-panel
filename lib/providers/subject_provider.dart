@@ -3,38 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+//models Files
 import '../models/subject_model.dart';
 import '../models/http_exception.dart';
-// import '../dummy/dummy_material_programming_language.dart';
+
 
 
 class SubjectProvider with ChangeNotifier {
 
-  // final String type;
-
-  // List<SubjectModel> _subjects = [];
-  // List<SubjectModel> _frameworks = [];
-  // List<SubjectModel> _coreConcepts = [];
-
   List<SubjectModel> _halfList = [];
-
-  // var count = _coreConcepts.length + _subjects.length + _frameworks.length;
-
-  // var count = coreConcepts.length;
-
-  // SubjectProvider();
-
-  // List<SubjectModel> get subjects {
-  //   return [..._subjects];
-  // }
-
-  // List<SubjectModel> get frameworks {
-  //   return [..._frameworks];
-  // }
-
-  // List<SubjectModel> get coreConcepts {
-  //   return [..._coreConcepts];
-  // }
 
   List<SubjectModel> get halfList {
     return [..._halfList];
@@ -82,22 +59,6 @@ class SubjectProvider with ChangeNotifier {
       });
 
       _halfList = loadedData;
-
-      // for (var i = 0; i < loadedData.length; i++) {
-
-      //   // String type = loadedData[i].type;
-        
-      // if (loadedData[i].type == SubjectType.ProgrammingLanguage) {
-      //   _subjects = loadedData;
-      // }else if(loadedData[i].type == SubjectType.FrameWork) {
-      //   _frameworks = loadedData;
-      // }else if(loadedData[i].type == SubjectType.CoreConcepts) {
-      //   _coreConcepts = loadedData;
-      // }else {
-      //   print('...');
-      // }
-      
-      // }
 
       notifyListeners();
 
@@ -153,15 +114,6 @@ class SubjectProvider with ChangeNotifier {
       id: json.decode(response.body)['name'],
     );
 
-    // if (subject.type == SubjectType.ProgrammingLanguage) {
-    //   _subjects.add(newCourse);
-    // }else if (subject.type == SubjectType.FrameWork) {
-    //   _frameworks.add(newCourse);
-    // }else if(subject.type == SubjectType.CoreConcepts) {
-    //   _coreConcepts.add(newCourse);
-    // }else {
-    //   print('enter the valid input');
-    // }
 
     _halfList.add(newCourse);
 
@@ -227,8 +179,6 @@ class SubjectProvider with ChangeNotifier {
     }else {
       print('...');
     }
-
-    // notifyListeners();
 
   }
 

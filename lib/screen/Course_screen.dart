@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//model Files
 import '../models/subject_model.dart';
-import '../widget/course_widget.dart';
-import './course_edit_screen.dart';
+//providers Files
 import '../providers/subject_provider.dart';
-// import '../models/subject_model.dart';
-// import '../providers/subject_provider.dart';
+//edit Screen Files
+import '../edit_Screens/course_edit_screen.dart';
+//widget Files
+import '../widget/course_widget.dart';
+
 
 
 class HomePage extends StatefulWidget {
-  // const HomePage({Key key}) : super(key: key);
-
   static const routeName = '/course-screen';
 
   @override

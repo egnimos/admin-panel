@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tutlify_admin_panel/providers/subject_topics.dart';
-import 'package:tutlify_admin_panel/widget/quiz_edit_widget.dart';
-import 'package:tutlify_admin_panel/widget/topic_content_edit_widget.dart';
+
+//provider files
+import '../providers/subject_topics.dart';
+
+//edit Screen files
+import '../edit_Screens/quiz_edit_widget.dart';
+import '../edit_Screens/topic_content_edit_widget.dart';
 
 
 class TopicContentQuizContentFormScreen extends StatelessWidget {

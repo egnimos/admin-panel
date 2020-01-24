@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tutlify_admin_panel/widget/quiz_widget.dart';
-import 'package:tutlify_admin_panel/widget/topic_content_edit_widget.dart';
-// import 'package:provider/provider.dart';
 
-// import '../models/question_answer.dart';
-// import '../screen/topic_content_quiz_content_form_screen.dart';
-// import '../widget/quiz_widget.dart';
-// import '../providers/quiz_answer_provider.dart';
+//providers Files
 import '../providers/subject_topics.dart';
+//edit Files
+import '../edit_Screens/topic_content_edit_widget.dart';
+//widget Files
+import '../widget/quiz_widget.dart';
 
 
 

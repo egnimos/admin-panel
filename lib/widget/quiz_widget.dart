@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tutlify_admin_panel/screen/quiz_edit_update_screen.dart';
 
-
+//providers Files
 import '../providers/subject_topics.dart';
-import '../screen/topic_content_quiz_content_form_screen.dart';
 import '../providers/quiz_answer_provider.dart';
+//edit Screens Files
+import '../edit_Screens/quiz_edit_update_screen.dart';
+//screens Files
+import '../screen/topic_content_quiz_content_form_screen.dart';
 
 class QuizWidget extends StatefulWidget {
 

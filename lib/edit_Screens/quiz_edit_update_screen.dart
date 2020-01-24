@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/quiz_answer_provider.dart';
+//model File
 import '../models/question_answer.dart';
+//provider File
+import '../providers/quiz_answer_provider.dart';
 
 
-class QuizEditWidget extends StatefulWidget {
+class QuizEditUpdateScreen extends StatefulWidget {
 
-  final String topicsOrQuizId;
+  static const routeName = 'quiz-update';
 
-  QuizEditWidget({
-    @required this.topicsOrQuizId,
+  QuizEditUpdateScreen({
     Key key}) : super(key: key);
 
   @override
-  _QuizEditWidgetState createState() => _QuizEditWidgetState();
+  _QuizEditUpdateScreenState createState() => _QuizEditUpdateScreenState();
 }
 
-class _QuizEditWidgetState extends State<QuizEditWidget> {
+class _QuizEditUpdateScreenState extends State<QuizEditUpdateScreen> {
 
     
   final _optionFocusNodea = FocusNode();
@@ -30,7 +31,18 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
   final _form = GlobalKey<FormState>();
 
 //for circular indicator
+  var _isInit = true;
   var _isLoading = false;
+
+  var _isInitValue = {
+    'qcId': null,
+    'question': '',
+    'options A': '',
+    'options B': '',
+    'options C': '',
+    'options D': '',
+    'answer': '',
+  };
 
 
   var _editedQuiz = QuestionAnswer(
@@ -46,20 +58,33 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
     answer: '',
   );
 
-  // QuestionAnswer editedQuiz(value) {
-  //   return _editedQuiz = QuestionAnswer(
-  //   id: null,
-  //   qcId: null,
-  //   question: '',
-  //   options: {
-  //     'a': '',
-  //     'b': '',
-  //     'c': '',
-  //     'd': '',
-  //   },
-  //   answer: '',
-  // );
-  // }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final quizId = ModalRoute.of(context).settings.arguments as String;
+
+      if (quizId != null) {
+
+        _editedQuiz = Provider.of<QuizAnswerProvider>(context).findById(quizId);
+
+        _isInitValue = {
+          'qcId': _editedQuiz.qcId,
+          'question': _editedQuiz.question,
+          'options A': _editedQuiz.options['a'],
+          'options B': _editedQuiz.options['b'],
+          'options C': _editedQuiz.options['c'],
+          'options D': _editedQuiz.options['d'],
+          'answer': _editedQuiz.answer,
+        };
+        
+      } 
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+
 
   Future<void> _saveFormData() async {
 
@@ -77,7 +102,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
 
     try {
 
-      await Provider.of<QuizAnswerProvider>(context, listen: false).addQues(_editedQuiz);
+      await Provider.of<QuizAnswerProvider>(context, listen: false).updateQues(_editedQuiz.id, _editedQuiz);
       
     } catch (error) {
 
@@ -123,13 +148,14 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
 
   
   //method of the question and answer input
-  Container questionAnswerInput(String input, BuildContext context, String topicsOrQuizId) {
+  Container questionAnswerInput(String input, BuildContext context) {
     
     return Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width - 5,
                   height: 100,
                   child: TextFormField(
+                    initialValue: _isInitValue['question'],
                     decoration: InputDecoration(labelText: input),
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (_) {
@@ -146,7 +172,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                     onSaved: (value) {
                       _editedQuiz = QuestionAnswer(
                         id: _editedQuiz.id,
-                        qcId: topicsOrQuizId,
+                        qcId: _editedQuiz.qcId,
                         question: value,
                         options: {
                           'a': _editedQuiz.options['a'],
@@ -197,7 +223,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
               children: [
                 
                 //question input
-                questionAnswerInput('Question', context, widget.topicsOrQuizId),
+                questionAnswerInput('Question', context),
                 
                 //option  input
                 Row(
@@ -216,6 +242,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                      width: MediaQuery.of(context).size.width-5,
                       height: 100,
                       child: TextFormField(
+                        initialValue: _isInitValue['options A'],
                         decoration: InputDecoration(labelText: 'option'),
                         textInputAction: TextInputAction.next,
                         focusNode: _optionFocusNodea,
@@ -234,7 +261,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                         onSaved: (value) {
                             _editedQuiz = QuestionAnswer(
                             id: _editedQuiz.id,
-                            qcId: widget.topicsOrQuizId,
+                            qcId: _editedQuiz.qcId,
                             question: _editedQuiz.question,
                             options: {
                               'a': value,
@@ -269,6 +296,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                      width: MediaQuery.of(context).size.width-5,
                       height: 100,
                       child: TextFormField(
+                        initialValue: _isInitValue['options B'],
                         decoration: InputDecoration(labelText: 'option'),
                         textInputAction: TextInputAction.next,
                         focusNode: _optionFocusNodeb,
@@ -287,7 +315,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                         onSaved: (value) {
                            _editedQuiz = QuestionAnswer(
                             id: _editedQuiz.id,
-                            qcId: widget.topicsOrQuizId,
+                            qcId: _editedQuiz.qcId,
                             question: _editedQuiz.question,
                             options: {
                               'a': _editedQuiz.options['a'],
@@ -321,6 +349,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                      width: MediaQuery.of(context).size.width-5,
                       height: 100,
                       child: TextFormField(
+                        initialValue: _isInitValue['options C'],
                         decoration: InputDecoration(labelText: 'option'),
                         textInputAction: TextInputAction.next,
                         focusNode: _optionFocusNodec,
@@ -339,7 +368,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                         onSaved: (value) {
                            _editedQuiz = QuestionAnswer(
                             id: _editedQuiz.id,
-                            qcId: widget.topicsOrQuizId,
+                            qcId: _editedQuiz.qcId,
                             question: _editedQuiz.question,
                             options: {
                               'a': _editedQuiz.options['a'],
@@ -373,6 +402,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                      width: MediaQuery.of(context).size.width-5,
                       height: 100,
                       child: TextFormField(
+                        initialValue: _isInitValue['options D'],
                         decoration: InputDecoration(labelText: 'option'),
                         textInputAction: TextInputAction.next,
                         focusNode: _optionFocusNoded,
@@ -391,7 +421,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                         onSaved: (value) {
                           _editedQuiz = QuestionAnswer(
                             id: _editedQuiz.id,
-                            qcId: widget.topicsOrQuizId,
+                            qcId: _editedQuiz.qcId,
                             question: _editedQuiz.question,
                             options: {
                               'a': _editedQuiz.options['a'],
@@ -414,6 +444,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                   width: MediaQuery.of(context).size.width - 5,
                   height: 100,
                   child: TextFormField(
+                    initialValue: _isInitValue['answer'],
                     decoration: InputDecoration(labelText: 'Answer'),
                     textInputAction: TextInputAction.done,
                     focusNode: _answerFocusNode,
@@ -432,7 +463,7 @@ class _QuizEditWidgetState extends State<QuizEditWidget> {
                     onSaved: (value) {
                       _editedQuiz = QuestionAnswer(
                         id: _editedQuiz.id,
-                        qcId: widget.topicsOrQuizId,
+                        qcId: _editedQuiz.qcId,
                         question: _editedQuiz.question,
                         options: {
                           'a': _editedQuiz.options['a'],

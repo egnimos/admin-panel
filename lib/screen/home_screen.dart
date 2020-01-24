@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tutlify_admin_panel/screen/Course_screen.dart';
 
+//models Files
+import '../models/subject_model.dart';
+//providers Files
 import '../providers/subject_provider.dart';
 import '../providers/subject_topics_provider.dart';
 import '../providers/quiz_answer_provider.dart';
-
-import '../models/subject_model.dart';
+//screen Files
+import '../screen/Course_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {

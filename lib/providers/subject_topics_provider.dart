@@ -2,28 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tutlify_admin_panel/models/http_exception.dart';
 
+//models Files
+import '../models/http_exception.dart';
+//providers Files
 import '../providers/subject_topics.dart';
-// import '../dummy/dummy_material_program_topics.dart';
+
 
 
 class SubjectTopicsProvider with ChangeNotifier {
 
-  // List<SubjectTopics> _topics = dummyMaterialSubjectTopics;
-  // List<SubjectTopics> _quiz = dummyMaterialSubjectQuiz;
 
   List<SubjectTopics> _topicQuiz = [];
 
 
   List<SubjectTopics> get topicsQuizs {
-    // return [..._topics];
-    // List<dynamic> _quizTopics = [];
-
-    // for (var i = 0; i < _quiz.length; i++) {
-    //   _quizTopics.add(_topics[i]);
-    //   _quizTopics.add(_quiz[i]);
-    // }
 
     return [..._topicQuiz];
 
@@ -44,21 +37,7 @@ class SubjectTopicsProvider with ChangeNotifier {
 
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      final List<SubjectTopics> loadedData = [
-        SubjectTopics(
-        id: 'q2',
-        subId: 's1',
-        type: CourseType.Topics,
-        title: 'Topic time 1'
-        ),
-
-        SubjectTopics(
-        id: 'q1',
-        subId: 's1',
-        type: CourseType.Quiz,
-        title: 'Quiz time 1'
-        )
-      ];
+      final List<SubjectTopics> loadedData = [];
 
       CourseType type;
 
