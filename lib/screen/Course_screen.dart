@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/subject_model.dart';
 import '../widget/course_widget.dart';
 import './course_edit_screen.dart';
 import '../providers/subject_provider.dart';
@@ -10,6 +11,8 @@ import '../providers/subject_provider.dart';
 
 class HomePage extends StatefulWidget {
   // const HomePage({Key key}) : super(key: key);
+
+  static const routeName = '/course-screen';
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -48,10 +51,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
+    final courseType = ModalRoute.of(context).settings.arguments as SubjectType;
 
-    final courseData = Provider.of<SubjectProvider>(context);
-    //subject (Programming language)..
-    //final programmingLanguage = courseData.halfList.where((type) => type.type == SubjectType.ProgrammingLanguage).toList();
+    final courseData = Provider.of<SubjectProvider>(context).halfList.where((course) => course.type == courseType).toList();
 
     return Scaffold(
 
@@ -88,16 +91,16 @@ class _HomePageState extends State<HomePage> {
                 //    width: MediaQuery.of(context).size.width - 5,
                 //       height: 300,
                       child: ListView.builder(
-                      itemCount: courseData.halfList.length,
+                      itemCount: courseData.length,
                       itemBuilder: (_, i) => Column(
                         children: <Widget>[
 
                           CourseWidget(
-                           id: courseData.halfList[i].id,
-                           title: courseData.halfList[i].title,
-                           color: courseData.halfList[i].color,
-                           imageUrl: courseData.halfList[i].imageUrl,
-                           type: courseData.halfList[i].type,
+                           id: courseData[i].id,
+                           title: courseData[i].title,
+                           color: courseData[i].color,
+                           imageUrl: courseData[i].imageUrl,
+                           type: courseData[i].type,
                           ),
 
                           Divider()

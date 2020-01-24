@@ -117,7 +117,7 @@ class _TopicEditScreenState extends State<TopicEditScreen> {
 
        showDialog(
         context: context,
-        builder: (ctx) => AlertDialog(
+        builder: (context) => AlertDialog(
           content: Text('Process faied check the connection'),
           actions: <Widget>[
             FlatButton(

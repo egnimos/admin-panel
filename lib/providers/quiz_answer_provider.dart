@@ -17,6 +17,12 @@ class QuizAnswerProvider with ChangeNotifier {
     return [..._queAns];
   }
 
+
+  //find the topics on Id
+  QuestionAnswer findById(String id) {
+    return queAns.firstWhere((top) => top.id == id);
+  }
+
   //fetch ques
   Future<void> fetchAndSetQues() async {
 

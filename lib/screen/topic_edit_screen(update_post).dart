@@ -93,9 +93,6 @@ class _TopicEditScreenUpdatePostState extends State<TopicEditScreenUpdatePost> {
   //add and updte the form data
   Future<void> _saveFormData() async {
 
-    setState(() {
-      _isLoading = true;
-    });
 
     final _isValid = _form.currentState.validate();
 
@@ -103,6 +100,9 @@ class _TopicEditScreenUpdatePostState extends State<TopicEditScreenUpdatePost> {
       return; //return if the validation exist
     }
 
+    setState(() {
+      _isLoading = true;
+    });
 
     _form.currentState.save();
 
@@ -116,7 +116,7 @@ class _TopicEditScreenUpdatePostState extends State<TopicEditScreenUpdatePost> {
 
        showDialog(
         context: context,
-        builder: (ctx) => AlertDialog(
+        builder: (context) => AlertDialog(
           content: Text('Process faied check the connection'),
           actions: <Widget>[
             FlatButton(

@@ -88,7 +88,7 @@ class TopicWidget extends StatelessWidget {
 
                       try {
 
-                        await Provider.of<SubjectTopicsProvider>(context).deleteTopics(id);
+                        await Provider.of<SubjectTopicsProvider>(context, listen: false).deleteTopics(id);
                         
                       } catch (error) {
 

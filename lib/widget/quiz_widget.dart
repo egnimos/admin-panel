@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tutlify_admin_panel/screen/quiz_edit_update_screen.dart';
 
 
 import '../providers/subject_topics.dart';
@@ -192,7 +193,7 @@ class QuizWidgetClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final scaffold = Scaffold.of(context);
+    //final scaffold = Scaffold.of(context);
     
     return Container(
       color: Colors.white,
@@ -215,14 +216,20 @@ class QuizWidgetClass extends StatelessWidget {
 
                       IconButton(
                         icon: Icon(Icons.edit),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            QuizEditUpdateScreen.routeName,
+
+                            arguments: id,
+                          );
+                        },
                       ),
 
                       IconButton(
                         icon: Icon(Icons.delete),
-                        onPressed: () async {
+                        onPressed: () {
 
-                          try {
+                          
 
                             showDialog(
                               context: context,
@@ -244,6 +251,9 @@ class QuizWidgetClass extends StatelessWidget {
                                       try {
 
                                       await Provider.of<QuizAnswerProvider>(context, listen:false).deleteQues(id);
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+
                                         
                                       } catch (error) {
 
@@ -269,23 +279,6 @@ class QuizWidgetClass extends StatelessWidget {
                               )
                             );
                             
-                            
-                          } catch (error) {
-
-                            print(error);
-
-                             scaffold.showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Delete failed!! check you internet connection',
-                                  style: TextStyle(
-                                    fontSize:15,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )
-                              ),
-                            );
-                          }
                         },
                       ),
 

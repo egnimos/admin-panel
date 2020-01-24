@@ -206,6 +206,7 @@ class SubjectTopicsProvider with ChangeNotifier {
     if (response.statusCode >= 400) {
 
       _topicQuiz.insert(existingTopicIndex, existingTopics);
+      notifyListeners();
       throw HttpException('could not delete the topic');
       
     }

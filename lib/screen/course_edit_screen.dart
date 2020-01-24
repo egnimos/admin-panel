@@ -128,9 +128,6 @@ class _CourseEditState extends State<CourseEdit> {
   ///save the form data
   Future<void> _saveFormData() async{
 
-    setState(() {
-    _isLoading = true;
-    });
 
     final _isValid = _form.currentState.validate();
 
@@ -138,13 +135,37 @@ class _CourseEditState extends State<CourseEdit> {
       return; //it will stops the execution of function if there is validation error exist
     }
 
+    setState(() {
+    _isLoading = true;
+    });
+
     _form.currentState.save();
 
     if (_editedCourse.id != null) {
 
-     await Provider.of<SubjectProvider>(context, listen: false).updateCourses(_editedCourse.id, _editedCourse);
- 
-      
+      try {
+
+        await Provider.of<SubjectProvider>(context, listen: false).updateCourses(_editedCourse.id, _editedCourse);
+        
+      } catch (error) {
+
+        await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Error ocurred!!'),
+              content: Text('Something went wrong'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }
+                ),],
+            ),
+          );
+
+      }
+
     }else {
 
       try{
@@ -155,7 +176,7 @@ class _CourseEditState extends State<CourseEdit> {
 
          await showDialog(
             context: context,
-            builder: (ctx) => AlertDialog(
+            builder: (context) => AlertDialog(
               title: Text('Error ocurred!!'),
               content: Text('Something went wrong'),
               actions: <Widget>[
